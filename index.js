@@ -12,6 +12,7 @@ server.use(restify.plugins.bodyParser());
 // server.head('/hello/:name', respond);
 
 server.listen(config.PORT, function() {
+  mongoose.set('useFindAndModify', false);
   mongoose.connect(config.MONGODB_URI, { userNewURLParser: true }
   );
 });
@@ -23,5 +24,6 @@ db.on('error', (err) => console.log(err));
 //opening db and it only happens once.
 db.once('open', () => {
   require('./routes/customers')(server);
+  require('./routes/users')(server);
   console.log('server started on port' + config.PORT);
 })
