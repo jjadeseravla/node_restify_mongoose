@@ -9,7 +9,7 @@ class CustomerList extends Component {
 }
   state = {
     customers: [
-      { name: "Jade", email: 'j@gmail.com', balance: 12},
+      { name: "dave", email: 'd@gmail.com', balance: 14},
       { name: "Bob", email: 'bob@gmail.com', balance: 10},
       { name: "Englebert", email: 'eng@gmail.com', balance: 5}
     ]
@@ -26,6 +26,14 @@ class CustomerList extends Component {
      this.setState({
        customers: result
      });
+  }
+
+  componentDidMount() {
+    fetch('/customers')
+      .then(response => response.json())
+      .then(function(data) {
+        console.log(data);
+    });
   }
 
   render() {
