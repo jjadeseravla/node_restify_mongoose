@@ -8,37 +8,69 @@ class CustomerList extends Component {
   this.handle = this.handle.bind(this)
 }
   state = {
-    customers: [
-      { name: "dave", email: 'd@gmail.com', balance: 14},
-      { name: "Bob", email: 'bob@gmail.com', balance: 10},
-      { name: "Englebert", email: 'eng@gmail.com', balance: 5}
+    theNames: [
+      // { name: "dave", email: 'd@gmail.com', balance: 14},
+      // { name: "Bob", email: 'bob@gmail.com', balance: 10},
+      // { name: "Englebert", email: 'eng@gmail.com', balance: 5}
     ]
   }
 
   handle(item) {
-    console.log(this.state);
-    const result = this.state.customers.filter(function(customer) {
+    // console.log(this.state);
+    const result = this.state.theNames.filter(function(customer) {
       return customer.name !== item.name
     })
-    console.log(result);
+    // console.log(result);
 
 
      this.setState({
-       customers: result
+       theNames: result
      });
   }
 
+
   componentDidMount() {
-    fetch('/customers')
-      .then(response => response.json())
-      .then(function(data) {
-        console.log(data);
-    });
-  }
+    let that = this
+      fetch('/customers')
+        .then(function(response) {
+          return response.json()
+        })
+        .then(function(data) {
+          // console.log(data)
+          // let theNames = data.map(function(customer) {
+          //   return(
+          //     <div key={customer.response}>
+          //     </div>
+          //   )
+          // })
+          that.setState({theNames: data});
+          // console.log(that.state)
+          // console.log("state",this.state.theNames);
+      })
+    }
+
+
+    // componentDidMount() {
+    //   fetch('/customers')
+    //     .then(response => response.json())
+    //     .then(function(data) {
+    //       data => this.setState({ data });
+    //       console.log(data);
+    //   });
+    // }
+
+//     componentDidMount() {
+//   fetch('https://api.mydomain.com')
+//     .then(response => response.json())
+//     .then(data => this.setState({ data }));
+// }
+
 
   render() {
-    const { customers } = this.state;
-    console.log('', customers);
+
+    // const { customers } = this.state.customers;
+    let customers = this.state.theNames;
+    console.log(customers);
     return(
       <Container>
         <Button
@@ -47,18 +79,18 @@ class CustomerList extends Component {
           onClick={() => {
             const name = prompt('enter customer');
             if(name) {
-              this.setState(state => ({
-                customers: [...state.items]
-              }));
+              let names = this.state.theNames
+              let newCustomer = {name: name}
+              names.push(newCustomer)
+              this.setState( { theNames: names } )
             }
-          }}
+          }}>&times;
         >Add Customer</Button>
 
             {customers.map((item) => (
               <li onClick= {() => this.handle(item)}
-              >{ item.name}</li>
+              >{ item.name }</li>
             ))}
-
 
       </Container>
     );
@@ -66,6 +98,9 @@ class CustomerList extends Component {
 }
 
 export default CustomerList;
+
+
+
 
 
 // <CSSTransition key={name} timeput={500} classNames="fade">

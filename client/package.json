@@ -10,13 +10,13 @@
     "react-transition-group": "^2.5.0",
     "reactstrap": "^6.5.0"
   },
+  "proxy": "http://localhost:2000/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:2000/",
   "eslintConfig": {
     "extends": "react-app"
   },
